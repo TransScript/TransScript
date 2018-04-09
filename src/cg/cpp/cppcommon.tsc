@@ -178,7 +178,7 @@ return Optional<†⟨ParamFormCppClassName(#sortname, (), CFC_VAR)⟩>::nullopt
 /* Generate static method MakeVariable corresponding to the given `#sortname`. */
 func CppMethodMakeVariable(#sortname: String, #csortvars?:List<Core_csortvars_sort>, #allowvar: Bool, #def: Bool) -> Text4_text_sort
 → text⟦†⟨TextIf(#def, ()->CppTemplatePrefix(#csortvars?))⟩
-†⟨TextIf(Not(#def), ()->text⟦static ⟧)⟩tosca::Variable& †⟨CppQualifier(#sortname, #csortvars?, #def)⟩MakeVariable(tosca::Context ctx, const tosca::string& hint)†⟨
+†⟨TextIf(Not(#def), ()->text⟦static ⟧)⟩tosca::Variable& †⟨CppQualifier(#sortname, #csortvars?, #def)⟩MakeVariable(tosca::Context& ctx, const tosca::string& hint)†⟨
    If(#def,
      ()->If(#allowvar,
        ()->text⟦¶{→
