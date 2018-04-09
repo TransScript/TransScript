@@ -5,6 +5,7 @@
 #include "std/core.h"
 #include "std/listdef.h"
 #include "strutils.h"
+#include <memory.h>
 #include <regex>
 
 using namespace tosca;
@@ -27,10 +28,23 @@ StringTerm& BeforeFirst(Context& ctx, StringTerm& string, StringTerm& sep)
     const tosca::string& usep = sep.Unbox();
     tosca::string::size_type idx = ustring.find(usep);
 
-    StringTerm& result = newStringTerm(ctx, (idx == tosca::string::npos) ? ustring : ustring.substr(0, idx));
-    string.Release();
     sep.Release();
-    return result;
+
+    if (idx == tosca::string::npos)
+    {
+        return string;
+    }
+    else
+    {
+        char *c_ubefore = (char*) malloc(idx+1);
+        memcpy(c_ubefore, ustring.c_str(), idx);
+        c_ubefore[idx] = '\0';
+        StringTerm& result = newStringTerm(ctx, (const char *)c_ubefore);
+        free(c_ubefore);
+        string.Release();
+
+        return result;
+    }
 }
 
 Bool& StringEqual(Context& ctx, StringTerm& str1, StringTerm& str2)
