@@ -393,7 +393,7 @@ namespace tosca {
 		}
 
     protected:
-		typedef std::unordered_map<K*, V*, std::hash<K*>, std::equal_to<K*>, Allocator<std::pair<const K*, V*>>> tsmap;
+		typedef std::unordered_map<K*, V*, std::hash<K*>, std::equal_to<K*>, Allocator<std::pair<K* const, V*>>> tsmap;
 
 		tsmap map;
 
@@ -403,7 +403,7 @@ namespace tosca {
         CMapTerm() : Ref(true), parent(Optional<CMapTerm>::nullopt)
         {}
 
-        CMapTerm(Context& ctx, CMapTerm& parent): map(10, std::hash<K*>(), std::equal_to<K*>(), Allocator<std::pair<const K*, V*>>(ctx)), parent(make_optional<CMapTerm>(parent))
+        CMapTerm(Context& ctx, CMapTerm& parent): map(10, std::hash<K*>(), std::equal_to<K*>(), Allocator<std::pair<K* const, V*>>(ctx)), parent(make_optional<CMapTerm>(parent))
         {}
 
         /* Compact linked maps */
